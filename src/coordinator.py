@@ -5,7 +5,7 @@ import logging
 from src.config import *
 from src.network import network
 from src.partitioner import partition_image_coords
-from src.image_processor import draw_detections, get_image_dimensions
+from src.image_processor import draw_result, get_image_dimensions
 from src.metrics import save_metrics
 
 logger = logging.getLogger(__name__)
@@ -163,8 +163,8 @@ class Coordinator:
 
         total_time = time.time() - job["start_time"]
 
-        if job.get("image_bytes"):
-            result_image = draw_detections(job["image_bytes"], all_objects)
+        if job.get("image_bytes") and job.get("tasks"):
+            result_image = draw_result(job["image_bytes"], job["tasks"], all_objects)
             network.set_job_result_image(job_id, result_image)
 
         network.set_job_status(job_id, "completed")
