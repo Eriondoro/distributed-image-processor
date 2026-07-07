@@ -261,10 +261,7 @@ class RedDetectorGUI:
         mode = self.mode_var.get()
         multiplier = self.multiplier_var.get()
         n_nodes = len(active)
-
-        if mode == "2d_grid" and (n_nodes % 2 != 0):
-            self._log("Modo 2D requer N par. Usando fallback para 1D-Horizontal.")
-            mode = "1d_horizontal"
+        total_parts = n_nodes * multiplier
 
         config = {
             "mode": mode,
@@ -288,7 +285,7 @@ class RedDetectorGUI:
         self.stats_text.configure(state=tk.DISABLED)
 
         self._log(f"Job submetido: {self.job_id}")
-        self._log(f"Modo: {mode}, Nos: {n_nodes}, Multiplicador: {multiplier}x, Tarefas: {n_nodes * multiplier}")
+        self._log(f"Modo: {mode}, Nos: {n_nodes}, Multiplicador: {multiplier}x, Tarefas: {total_parts}")
 
         self.root.after(500, self._poll_job_status)
 
@@ -338,6 +335,8 @@ class RedDetectorGUI:
 
         if job_metric:
             self._show_stats(job_metric)
+            from src.metrics import save_metrics
+            save_metrics(job_metric)
         else:
             self._log("Metricas nao encontradas para este job")
 

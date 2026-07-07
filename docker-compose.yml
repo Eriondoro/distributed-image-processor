@@ -18,6 +18,8 @@ services:
       - NODE_ID=worker-1
     depends_on:
       - redis
+    volumes:
+      - ./data:/app/data
     networks:
       - dist-net
 
@@ -28,6 +30,8 @@ services:
       - NODE_ID=worker-2
     depends_on:
       - redis
+    volumes:
+      - ./data:/app/data
     networks:
       - dist-net
 
@@ -38,6 +42,8 @@ services:
       - NODE_ID=worker-3
     depends_on:
       - redis
+    volumes:
+      - ./data:/app/data
     networks:
       - dist-net
 
@@ -48,6 +54,8 @@ services:
       - NODE_ID=worker-4
     depends_on:
       - redis
+    volumes:
+      - ./data:/app/data
     networks:
       - dist-net
 
@@ -60,6 +68,8 @@ services:
       - redis
     profiles:
       - all8
+    volumes:
+      - ./data:/app/data
     networks:
       - dist-net
 
@@ -72,6 +82,8 @@ services:
       - redis
     profiles:
       - all8
+    volumes:
+      - ./data:/app/data
     networks:
       - dist-net
 
@@ -84,6 +96,8 @@ services:
       - redis
     profiles:
       - all8
+    volumes:
+      - ./data:/app/data
     networks:
       - dist-net
 
@@ -96,6 +110,8 @@ services:
       - redis
     profiles:
       - all8
+    volumes:
+      - ./data:/app/data
     networks:
       - dist-net
 

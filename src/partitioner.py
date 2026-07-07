@@ -28,9 +28,11 @@ def partition_image_coords(image_bytes, n_parts, mode):
     elif mode == "1d_vertical":
         return _split_1d_vertical(n_parts, w, h)
     elif mode == "2d_grid":
-        if n_parts % 2 != 0:
+        if n_parts < 4:
             return _split_1d_horizontal(n_parts, w, h)
         rows, cols = find_grid_dimensions(n_parts)
+        if rows < 2 or cols < 2:
+            return _split_1d_horizontal(n_parts, w, h)
         return _split_2d_grid(n_parts, w, h, rows, cols)
     else:
         return _split_1d_horizontal(n_parts, w, h)
