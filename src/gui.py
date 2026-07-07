@@ -118,10 +118,8 @@ class RedDetectorGUI:
         mult_frame = ttk.Frame(cfg_frame)
         mult_frame.pack(fill=tk.X, pady=(2, 5))
         self.multiplier_var = tk.IntVar(value=1)
-        ttk.Radiobutton(mult_frame, text="1x", variable=self.multiplier_var, value=1).pack(side=tk.LEFT, padx=5)
-        ttk.Radiobutton(mult_frame, text="10x", variable=self.multiplier_var, value=10).pack(side=tk.LEFT, padx=5)
-        ttk.Radiobutton(mult_frame, text="20x", variable=self.multiplier_var, value=20).pack(side=tk.LEFT, padx=5)
-        ttk.Radiobutton(mult_frame, text="50x", variable=self.multiplier_var, value=50).pack(side=tk.LEFT, padx=5)
+        ttk.Spinbox(mult_frame, from_=1, to=100, textvariable=self.multiplier_var, width=5).pack(side=tk.LEFT, padx=5)
+        ttk.Label(mult_frame, text="x").pack(side=tk.LEFT)
 
         # Process button
         self.process_btn = ttk.Button(cfg_frame, text="Processar Imagem", command=self._start_processing, state=tk.DISABLED)
