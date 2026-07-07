@@ -260,7 +260,8 @@ class RedDetectorGUI:
 
         mode = self.mode_var.get()
         multiplier = self.multiplier_var.get()
-        n_nodes = len(active)
+        worker_nodes = {k: v for k, v in active.items() if k != NODE_ID}
+        n_nodes = len(worker_nodes) if worker_nodes else 1
         total_parts = n_nodes * multiplier
 
         config = {
