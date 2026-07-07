@@ -1,0 +1,107 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - dist-net
+
+  worker-1:
+    build: .
+    environment:
+      - REDIS_HOST=redis
+      - NODE_ID=worker-1
+    depends_on:
+      - redis
+    networks:
+      - dist-net
+
+  worker-2:
+    build: .
+    environment:
+      - REDIS_HOST=redis
+      - NODE_ID=worker-2
+    depends_on:
+      - redis
+    networks:
+      - dist-net
+
+  worker-3:
+    build: .
+    environment:
+      - REDIS_HOST=redis
+      - NODE_ID=worker-3
+    depends_on:
+      - redis
+    networks:
+      - dist-net
+
+  worker-4:
+    build: .
+    environment:
+      - REDIS_HOST=redis
+      - NODE_ID=worker-4
+    depends_on:
+      - redis
+    networks:
+      - dist-net
+
+  worker-5:
+    build: .
+    environment:
+      - REDIS_HOST=redis
+      - NODE_ID=worker-5
+    depends_on:
+      - redis
+    profiles:
+      - all8
+    networks:
+      - dist-net
+
+  worker-6:
+    build: .
+    environment:
+      - REDIS_HOST=redis
+      - NODE_ID=worker-6
+    depends_on:
+      - redis
+    profiles:
+      - all8
+    networks:
+      - dist-net
+
+  worker-7:
+    build: .
+    environment:
+      - REDIS_HOST=redis
+      - NODE_ID=worker-7
+    depends_on:
+      - redis
+    profiles:
+      - all8
+    networks:
+      - dist-net
+
+  worker-8:
+    build: .
+    environment:
+      - REDIS_HOST=redis
+      - NODE_ID=worker-8
+    depends_on:
+      - redis
+    profiles:
+      - all8
+    networks:
+      - dist-net
+
+networks:
+  dist-net:
+    driver: bridge
+
+volumes:
+  redis_data:
