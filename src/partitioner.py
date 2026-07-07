@@ -37,57 +37,70 @@ def partition_image_coords(image_bytes, n_parts, mode):
 
 
 def _split_1d_horizontal(n_parts, w, h):
+    base = h // n_parts
+    remainder = h % n_parts
     partitions = []
-    part_height = h // n_parts
+    y = 0
     for i in range(n_parts):
-        y_start = i * part_height
-        y_end = h if i == n_parts - 1 else (i + 1) * part_height
+        part_h = base + (1 if i < remainder else 0)
         partitions.append({
             "task_id": f"part_{i:04d}",
             "offset_x": 0,
-            "offset_y": y_start,
+            "offset_y": y,
             "width": w,
-            "height": y_end - y_start,
+            "height": part_h,
             "part_index": i,
         })
+        y += part_h
     return partitions
 
 
 def _split_1d_vertical(n_parts, w, h):
+    base = w // n_parts
+    remainder = w % n_parts
     partitions = []
-    part_width = w // n_parts
+    x = 0
     for i in range(n_parts):
-        x_start = i * part_width
-        x_end = w if i == n_parts - 1 else (i + 1) * part_width
+        part_w = base + (1 if i < remainder else 0)
         partitions.append({
             "task_id": f"part_{i:04d}",
-            "offset_x": x_start,
+            "offset_x": x,
             "offset_y": 0,
-            "width": x_end - x_start,
+            "width": part_w,
             "height": h,
             "part_index": i,
         })
+        x += part_w
     return partitions
 
 
 def _split_2d_grid(n_parts, w, h, rows, cols):
-    partitions = []
-    cell_w = w // cols
-    cell_h = h // rows
+    base_w = w // cols
+    rem_w = w % cols
+    base_h = h // rows
+    rem_h = h % rows
 
+    col_widths = [base_w + (1 if c < rem_w else 0) for c in range(cols)]
+    row_heights = [base_h + (1 if r < rem_h else 0) for r in range(rows)]
+
+    col_positions = [0]
+    for cw in col_widths:
+        col_positions.append(col_positions[-1] + cw)
+
+    row_positions = [0]
+    for rh in row_heights:
+        row_positions.append(row_positions[-1] + rh)
+
+    partitions = []
     idx = 0
     for r in range(rows):
         for c in range(cols):
-            x_start = c * cell_w
-            y_start = r * cell_h
-            x_end = w if c == cols - 1 else (c + 1) * cell_w
-            y_end = h if r == rows - 1 else (r + 1) * cell_h
             partitions.append({
                 "task_id": f"part_{idx:04d}",
-                "offset_x": x_start,
-                "offset_y": y_start,
-                "width": x_end - x_start,
-                "height": y_end - y_start,
+                "offset_x": col_positions[c],
+                "offset_y": row_positions[r],
+                "width": col_widths[c],
+                "height": row_heights[r],
                 "part_index": idx,
             })
             idx += 1
