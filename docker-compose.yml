@@ -16,6 +16,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - NODE_ID=worker-1
+      - WORKER_DELAY_MS=300
     depends_on:
       - redis
     volumes:
@@ -28,6 +29,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - NODE_ID=worker-2
+      - WORKER_DELAY_MS=300
     depends_on:
       - redis
     volumes:
@@ -40,6 +42,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - NODE_ID=worker-3
+      - WORKER_DELAY_MS=300
     depends_on:
       - redis
     volumes:
@@ -52,6 +55,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - NODE_ID=worker-4
+      - WORKER_DELAY_MS=300
     depends_on:
       - redis
     volumes:
@@ -64,6 +68,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - NODE_ID=worker-5
+      - WORKER_DELAY_MS=300
     depends_on:
       - redis
     profiles:
@@ -78,6 +83,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - NODE_ID=worker-6
+      - WORKER_DELAY_MS=300
     depends_on:
       - redis
     profiles:
@@ -92,6 +98,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - NODE_ID=worker-7
+      - WORKER_DELAY_MS=300
     depends_on:
       - redis
     profiles:
@@ -106,6 +113,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - NODE_ID=worker-8
+      - WORKER_DELAY_MS=300
     depends_on:
       - redis
     profiles:

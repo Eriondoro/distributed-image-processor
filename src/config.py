@@ -9,6 +9,8 @@ REDIS_DB = int(os.environ.get("REDIS_DB", "0"))
 
 NODE_ID = os.environ.get("NODE_ID", f"{socket.gethostname()}-{uuid.uuid4().hex[:8]}")
 
+WORKER_DELAY_MS = int(os.environ.get("WORKER_DELAY_MS", "0"))
+
 HEARTBEAT_INTERVAL = 2
 HEARTBEAT_TTL = 6
 LEADER_LOCK_TTL = 8

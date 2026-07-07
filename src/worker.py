@@ -62,6 +62,10 @@ class Worker:
                 task["height"],
             )
 
+            if WORKER_DELAY_MS > 0:
+                time.sleep(WORKER_DELAY_MS / 1000.0)
+                proc_time += WORKER_DELAY_MS / 1000.0
+
             result = {
                 "task_id": task_id,
                 "node_id": NODE_ID,
